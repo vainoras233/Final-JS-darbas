@@ -14,9 +14,11 @@ const triesDisplay = document.getElementById('tries');
 const bestTimeDisplay = document.getElementById('bestTime');
 
 function Game() {
-  const bestTime = localStorage.getItem('gameBestTime');
+  const bestTime = localStorage.getItem('diceMemoryBestTime');
   if (bestTime) {
       bestTimeDisplay.textContent = formatTime(parseInt(bestTime));
+  }else {
+    bestTimeDisplay.textContent = 'Geriausio laiko nėra';
   }
   
   startButton.addEventListener('click', startGame);
@@ -89,7 +91,7 @@ function startGame() {
       cards.push(card);
       gameBoard.appendChild(card);
   });
-  
+  startTimer();
 }
 
 function flipCard(card) {
@@ -108,10 +110,63 @@ function flipCard(card) {
   }
 }
 
+function checkMatch() {
+  const [card1, card2] = flippedCards;
+  
+  if (card1.dataset.value === card2.dataset.value) {
+      matchedPairs++;
+      flippedCards = [];
+      
+      // Check if game is complete
+      if (matchedPairs === 6) {
+          endGame();
+      }
+  } else {
+      card1.classList.remove('flipped');
+      card2.classList.remove('flipped');
+      flippedCards = [];
+  }
+}
+
+function startTimer() {
+  seconds = 0;
+  clearInterval(timer);
+  timer = setInterval(() => {
+      seconds++;
+      timeDisplay.textContent = formatTime(seconds);
+  }, 1000);
+}
+
 function formatTime(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+function endGame() {
+  isPlaying = false;
+  clearInterval(timer);
+
+
+const bestTime = localStorage.getItem('diceMemoryBestTime');
+if (!bestTime || seconds < parseInt(bestTime)) {
+    localStorage.setItem('diceMemoryBestTime', seconds.toString());
+    bestTimeDisplay.textContent = formatTime(seconds);
+}else {
+    bestTimeDisplay.textContent = formatTime(parseInt(bestTime));
+}
+
+setTimeout(() => {
+  alert(`Sveikiname! Jūs baigėte atminties žaidimą per ${formatTime(seconds)} su ${tries} bandymais.`);
+}, 500);
+}
+
+function resetGame() {
+  clearInterval(timer);
+  isPlaying = false;
+  gameBoard.innerHTML = '';
+  timeDisplay.textContent = '00:00';
+  triesDisplay.textContent = '0';
 }
 
 Game();

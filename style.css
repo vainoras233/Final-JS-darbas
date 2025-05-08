@@ -12,6 +12,7 @@ body {
 
 .container {
     max-width: 800px;
+    text-align: center;
     width: 100%;
     background: rgba(255,255,255,0.12);
     border-radius: 20px;
@@ -24,13 +25,37 @@ body {
 }
 
 h1 {
-    text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
     color: #fff;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2.2rem;
-    letter-spacing: 2px;
+    font-size: 1.7rem;
     text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    display: inline-block;
+    margin-left: 20px;
+}
+.wave:nth-of-type(1):hover {
+    display: inline-block;
+    animation: wave 3s ease;
+    color: rgb(247, 221, 51);
+}
+.wave:nth-of-type(2):hover {
+    display: inline-block;
+    animation: wave 3s ease;
+    color: rgb(44, 118, 4)
+}
+.wave:nth-of-type(3):hover {
+    display: inline-block;
+    animation: wave 3s ease;
+    color: rgb(173, 30, 5)
+}
+@keyframes wave {
+    0% { transform: rotate(0deg); }
+    15% { transform:rotate(14deg); }
+    30% { transform: rotate(-8deg); }
+    45% { transform: rotate(14deg); }
+    60% { transform: rotate(-4deg); }
+    75% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+    
 }
 
 .game-info {
@@ -42,7 +67,7 @@ h1 {
     border-radius: 10px;
     color: #fff;
     font-weight: 500;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
@@ -61,7 +86,6 @@ button {
     border-radius: 8px;
     cursor: pointer;
     font-size: 1.1rem;
-    font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     transition: background 0.3s, transform 0.2s;
@@ -196,12 +220,58 @@ button:hover {
         grid-template-columns: repeat(3, 1fr);
         gap: 14px;
     }
+    .card {
+        aspect-ratio: 4/4;
+        perspective: 600px;
+        
+    }
     .container {
         padding: 15px;
     }
     h1 {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 }
+@media (max-width: 600px) {
+    .game-board {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .container {
+        padding: 10px;
+    }
+    h1 {
+        font-size: 1.2rem;
+    }
+    .game-info {
+        font-size: 1rem;
+    }
+}
+@media (max-width:400px) {
+    .game-board {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .card {
+        aspect-ratio: 6/6;
+        perspective: 400px;
+    }
+    .container {
+        padding: 10px;
+    }
+    h1 {
+        flex-direction: column;
+        font-size: 0.9rem;
+    }
+    .game-info {
+        font-size: 0.7rem;
+    }
+    .controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+
 
 
